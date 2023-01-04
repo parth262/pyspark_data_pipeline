@@ -1,0 +1,18 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyspark_data_pipeline"
+version = "0.0.1"
+authors = [
+    {name="Parth Pandya", email="parthrpandya98@gmail.com"}
+]
+description = "PySpark data pipeline project to give basic data pipeline framework using spark and hudi"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
