@@ -7,7 +7,7 @@ from pyspark.sql import DataFrame
 class HudiSinkContext(SinkContext):
     table_name: str
     primary_key_field: str
-    parition_field: str
+    partition_field: str
     write_mode: str
     precombine_field: str
     output_path: str
@@ -20,7 +20,7 @@ class HudiSink(Sink):
         self.hudi_options = {
             'hoodie.table.name': hudi_sink_context.table_name,
             'hoodie.datasource.write.recordkey.field': hudi_sink_context.primary_key_field,
-            'hoodie.datasource.write.partitionpath.field': hudi_sink_context.parition_field,
+            'hoodie.datasource.write.partitionpath.field': hudi_sink_context.partition_field,
             'hoodie.datasource.write.table.name': hudi_sink_context.table_name,
             'hoodie.datasource.write.operation': hudi_sink_context.write_mode,
             'hoodie.datasource.write.precombine.field': hudi_sink_context.precombine_field
@@ -30,6 +30,6 @@ class HudiSink(Sink):
 
     def write(self, df: DataFrame):
         (df.write.format("hudi")
-        .options(**self.hudi_options)
-        .mode(self.spark_write_mode)
-        .save(self.sink_path))
+            .options(**self.hudi_options)
+            .mode(self.spark_write_mode)
+            .save(self.sink_path))

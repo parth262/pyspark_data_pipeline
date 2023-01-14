@@ -18,5 +18,5 @@ class FileSink(Sink):
     def write(self, df: DataFrame):
         (df.write.format(self.context.write_format)
          .options(**self.context.options)
-         .mode(self.context.write_mode)
+         .mode(self.context.spark_write_mode)
          .save(self.context.filepath))

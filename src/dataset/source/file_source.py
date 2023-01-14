@@ -18,5 +18,5 @@ class FileSource(Source):
 
     def read(self, spark: SparkSession) -> DataFrame:
         return (spark.read.options(**self.context.options)
-            .format(self.context.file_format)
-            .load(self.context.filepath))
+                .format(self.context.file_format)
+                .load(self.context.filepath))

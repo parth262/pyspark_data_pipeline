@@ -1,15 +1,16 @@
 from dataset.source import Source, SourceContext
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pyspark.sql import SparkSession, DataFrame
 
 
 @dataclass
 class JDBCSourceContext(SourceContext):
+    driver: str
     jdbc_url: str
     table_or_query: str
     username: str
     password: str
-    options: dict
+    options: dict = field(default_factory=dict)
     fetch_size = 1000
 
 
@@ -20,10 +21,11 @@ class JDBCSource(Source):
 
     def read(self, spark: SparkSession) -> DataFrame:
         return (spark.read.format("jdbc")
-            .option("url", self.context.jdbc_url)
-            .option("dbtable", self.context.table_or_query)
-            .option("user", self.context.username)
-            .option("password", self.context.password)
-            .option("fetchSize", self.context.fetch_size)
-            .options(**self.context.options)
-            .load())
+                .option("driver", self.context.driver)
+                .option("url", self.context.jdbc_url)
+                .option("dbtable", self.context.table_or_query)
+                .option("user", self.context.username)
+                .option("password", self.context.password)
+                .option("fetchSize", self.context.fetch_size)
+                .options(**self.context.options)
+                .load())
